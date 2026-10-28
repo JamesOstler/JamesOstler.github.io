@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jim Ostler</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Jim Ostler studies how rules and knowledge structures shape decisions under uncertainty. Willamette University, Atkinson School of Business.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,750&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a working paper's "Figure 1" as the hero; then two research columns that share one lens,
+   a teaching section built on the learning cycle, and a plain about/contact footer. Left-aligned, asymmetric. */
+:root{
+  --bg:#eef1ef;          /* fog, biased toward the teal accent */
+  --surface:#f8faf9;
+  --ink:#121b1e;
+  --muted:#56625f;
+  --rule:#c9d1ce;
+  --accent:#0d5d70;      /* deep teal: incumbents, structure */
+  --signal:#b97a06;      /* ochre: the entrant, variance, the live question */
+  --signal-soft:rgba(185,122,6,.16);
+  --accent-soft:rgba(13,93,112,.12);
+  --f-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Source Serif 4", Charter, "Iowan Old Style", Georgia, serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --step--1:.8rem; --step-0:1.0625rem; --step-1:1.3rem; --step-2:1.7rem; --step-3:clamp(2rem,4.2vw,2.9rem); --step-4:clamp(2.4rem,6.2vw,4.6rem);
+  --wrap:1180px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1416; --surface:#141c1f; --ink:#e3eae8; --muted:#97a6a2; --rule:#2a3639;
+    --accent:#5fb4c7; --signal:#e3ad45; --signal-soft:rgba(227,173,69,.18); --accent-soft:rgba(95,180,199,.14);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1416; --surface:#141c1f; --ink:#e3eae8; --muted:#97a6a2; --rule:#2a3639;
+  --accent:#5fb4c7; --signal:#e3ad45; --signal-soft:rgba(227,173,69,.18); --accent-soft:rgba(95,180,199,.14);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:var(--step-0);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration-color:var(--accent);text-underline-offset:.18em;text-decoration-thickness:1px}
+a:hover{color:var(--accent)}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+@media (min-width:720px){.wrap{padding-left:max(40px, env(safe-area-inset-left, 0px));padding-right:max(40px, env(safe-area-inset-right, 0px))}}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;letter-spacing:-.02em;line-height:1.08;text-wrap:balance;margin:0}
+p{margin:0}
+.label{font-family:var(--f-mono);font-size:var(--step--1);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.prose{max-width:62ch}
+
+/* header */
+.top{padding-block:22px}
+.top .wrap{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px 28px}
+.brand{font-family:var(--f-display);font-weight:750;font-size:1.15rem;letter-spacing:-.01em;text-decoration:none}
+.nav{display:flex;flex-wrap:wrap;gap:6px 22px;font-family:var(--f-mono);font-size:var(--step--1);letter-spacing:.04em}
+.nav a{text-decoration:none;color:var(--muted)}
+.nav a:hover{color:var(--ink)}
+
+/* hero */
+.hero{padding-block:28px 56px}
+.hero .wrap{display:grid;gap:40px}
+@media (min-width:980px){.hero .wrap{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:end;gap:56px}}
+.hero h1{font-size:var(--step-4);font-weight:600;letter-spacing:-.035em;line-height:1.0}
+.hero h1 .u{color:var(--signal);font-style:normal}
+.role{margin-top:26px;display:grid;gap:4px;font-size:1rem;color:var(--muted)}
+.role strong{color:var(--ink);font-weight:600}
+.cta{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;font-family:var(--f-display);font-weight:600;font-size:.98rem;text-decoration:none;border:1.5px solid var(--ink);border-radius:2px}
+.btn.solid{background:var(--ink);color:var(--bg)}
+.btn.solid:hover{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.btn:hover{color:var(--accent);border-color:var(--accent)}
+
+/* figure */
+.fig{background:var(--surface);border:1px solid var(--rule);padding:18px 18px 16px;min-width:0}
+.fig-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.fig-title{font-family:var(--f-display);font-weight:600;font-size:1.05rem}
+.fig canvas{display:block;width:100%;height:230px;margin-top:10px}
+.fig-controls{display:grid;gap:8px;margin-top:6px}
+.fig-controls label{display:flex;justify-content:space-between;gap:10px;font-family:var(--f-mono);font-size:var(--step--1);color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--signal)}
+.readout{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.readout div{border-top:3px solid var(--accent);padding-top:6px}
+.readout div.e{border-top-color:var(--signal)}
+.readout .num{font-family:var(--f-mono);font-size:1.35rem;font-weight:600;font-variant-numeric:tabular-nums}
+.readout .who{font-size:.86rem;color:var(--muted);line-height:1.35}
+.fig-cap{margin-top:12px;font-size:.92rem;color:var(--muted);line-height:1.5}
+.fig-cap a{color:var(--ink)}
+
+/* section scaffolding */
+section{padding-block:64px}
+.sec-head{display:grid;gap:12px;margin-bottom:36px}
+@media (min-width:900px){.sec-head{grid-template-columns:220px minmax(0,1fr);gap:32px;align-items:baseline}}
+.sec-head h2{font-size:var(--step-3)}
+.band{background:var(--surface);border-block:1px solid var(--rule)}
+
+/* programs */
+.programs{display:grid;gap:44px}
+@media (min-width:900px){.programs{grid-template-columns:1fr 1fr;gap:56px}}
+.program{min-width:0;display:grid;gap:16px;align-content:start}
+.program h3{font-size:var(--step-2)}
+.program .q{font-family:var(--f-display);font-size:1.12rem;line-height:1.35;font-weight:400}
+.path{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:4px 0 2px;padding:0;list-style:none;font-family:var(--f-mono);font-size:.76rem;letter-spacing:.02em}
+.path li{padding:5px 9px;background:var(--accent-soft);color:var(--ink)}
+.path li+li::before{content:"→";margin-right:8px;color:var(--muted)}
+.path li+li{background:none;padding-left:0}
+.path li+li span{padding:5px 9px;background:var(--accent-soft);display:inline-block}
+.now{border-left:3px solid var(--signal);padding:4px 0 4px 14px;font-size:.98rem}
+.now .label{color:var(--signal);display:block;margin-bottom:4px}
+.lens{margin-top:52px;display:grid;gap:14px;padding:26px 0 0;border-top:1px solid var(--rule)}
+@media (min-width:900px){.lens{grid-template-columns:220px minmax(0,1fr);gap:32px}}
+.lens h3{font-size:1.25rem}
+.lens p{font-size:1.12rem;max-width:66ch}
+
+/* papers */
+.papers{list-style:none;margin:0;padding:0;display:grid}
+.paper{display:grid;gap:6px;padding-block:20px;border-top:1px solid var(--rule)}
+.paper:last-child{border-bottom:1px solid var(--rule)}
+@media (min-width:900px){.paper{grid-template-columns:220px minmax(0,1fr) 150px;gap:32px;align-items:baseline}}
+.paper .meta{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);line-height:1.45}
+.paper .meta b{display:block;font-weight:600;color:var(--ink)}
+.paper .pub b{color:var(--accent)}
+.paper .wp b{color:var(--signal)}
+.paper h3{font-size:1.22rem;line-height:1.2}
+.paper p{color:var(--muted);margin-top:6px;max-width:64ch}
+.paper .go{font-family:var(--f-mono);font-size:.78rem}
+.paper .go a{white-space:nowrap}
+.pending{color:var(--muted);font-style:italic;font-family:var(--f-body)}
+
+/* teaching */
+.platforms{display:grid;gap:22px}
+@media (min-width:900px){.platforms{grid-template-columns:1fr 1fr;gap:28px}}
+.platform{background:var(--bg);border:1px solid var(--rule);padding:24px;display:grid;gap:12px;align-content:start;min-width:0}
+.platform h3{font-size:1.4rem}
+.courses{list-style:none;margin:6px 0 0;padding:0;display:grid}
+.courses li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;padding-block:10px;border-top:1px dashed var(--rule);font-size:.98rem}
+.courses .c{font-weight:600}
+.courses .d{grid-column:1 / -1;color:var(--muted);font-size:.92rem;line-height:1.45}
+.courses .w{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);white-space:nowrap}
+.courses .w.live{color:var(--signal)}
+.cycle{margin-top:40px}
+.cycle ol{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0;counter-reset:s}
+.cycle li{counter-increment:s;padding:14px 14px 14px 0;border-top:3px solid var(--accent);font-family:var(--f-display);font-weight:600;font-size:1rem;line-height:1.25;position:relative}
+.cycle li:nth-child(n+3){border-top-color:var(--signal)}
+.cycle li::before{content:counter(s);display:block;font-family:var(--f-mono);font-size:.72rem;font-weight:400;color:var(--muted);margin-bottom:6px}
+.cycle li span{display:block;font-family:var(--f-body);font-weight:400;font-size:.88rem;color:var(--muted);margin-top:4px}
+.book{margin-top:40px;display:grid;gap:10px;padding:22px 24px;border:1px solid var(--rule);background:var(--bg)}
+@media (min-width:900px){.book{grid-template-columns:220px minmax(0,1fr);gap:32px}}
+.book h3{font-size:1.2rem}
+
+/* about */
+.about{display:grid;gap:36px}
+@media (min-width:900px){.about{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:56px}}
+.facts{display:grid;gap:22px;align-content:start}
+.facts dl{margin:0;display:grid;gap:8px}
+.facts dt{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:0;font-size:.98rem;line-height:1.45}
+.contact{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px}
+.email{font-family:var(--f-mono);font-size:1rem;padding:9px 12px;background:var(--surface);border:1px solid var(--rule);user-select:all}
+.copy{font-family:var(--f-mono);font-size:.8rem;padding:9px 12px;background:none;border:1px solid var(--ink);color:var(--ink);cursor:pointer;border-radius:2px}
+.copy:hover{border-color:var(--accent);color:var(--accent)}
+.links{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:14px;font-family:var(--f-mono);font-size:.84rem}
+footer{padding-block:28px 40px;border-top:1px solid var(--rule);font-family:var(--f-mono);font-size:.76rem;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" id="top">Jim Ostler</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#research">Research</a>
+      <a href="#work">Papers</a>
+      <a href="#teaching">Teaching</a>
+      <a href="#about">About &amp; CV</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>I study how rules and knowledge structures shape decisions under <span class="u">uncertainty</span>.</h1>
+        <p class="prose" style="margin-top:22px;font-size:1.15rem">And what markets and organizations can do as a result: which markets form when a rule creates value, how firms see their rivals, why entrants take risks incumbents avoid, and what changes when a whole organization thinks with the same AI.</p>
+        <div class="role">
+          <span><strong>Associate Dean of Graduate Programs</strong></span>
+          <span>Associate Professor and JELD-WEN Chair of Free Enterprise · Atkinson School of Business, Willamette University</span>
+        </div>
+        <div class="cta">
+          <a class="btn solid" href="#research">See the research</a>
+          <a class="btn" href="#teaching">What I teach</a>
+        </div>
+      </div>
+
+      <figure class="fig" aria-labelledby="figtitle" style="margin:0">
+        <div class="fig-head">
+          <span class="fig-title" id="figtitle">Why an entrant swings for the fences</span>
+          <span class="label">Fig. 1</span>
+        </div>
+        <canvas id="dist" role="img" aria-label="Two performance distributions. The incumbent's is centered higher and narrow; the entrant's is centered lower and widens as strategic risk increases. A vertical line marks the survival threshold."></canvas>
+        <div class="fig-controls">
+          <label for="sigma"><span>Entrant's strategic risk (spread)</span><span id="sigmaVal">1.40</span></label>
+          <input type="range" id="sigma" min="0.4" max="2.4" step="0.05" value="1.4">
+        </div>
+        <div class="readout" aria-live="polite">
+          <div><span class="num" id="pInc">12.2%</span><div class="who">Incumbent clears the threshold</div></div>
+          <div class="e"><span class="num" id="pEnt">14.2%</span><div class="who">Entrant clears the threshold</div></div>
+        </div>
+        <p class="fig-cap">When only a few can win, a weaker entrant gains by widening its spread of outcomes, and the leader gains by narrowing it. Neither needs to love risk. Their position in the contest sets the value of variance. Drag the slider to see the entrant overtake. From <a href="#p-sftf">Swinging for the Fences</a>.</p>
+      </figure>
+    </div>
+  </div>
+
+  <section id="research" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Research</span>
+        <h2>Two questions, one lens</h2>
+      </div>
+
+      <div class="programs">
+        <article class="program">
+          <span class="label">Outside the firm</span>
+          <h3>From Regulation to Markets</h3>
+          <p class="q">How do rules become working markets, and why do some fail between policy intent and real outcomes?</p>
+          <ol class="path" aria-label="Program pathway">
+            <li>Rules &amp; recognition</li>
+            <li><span>Implementation &amp; strategic response</span></li>
+            <li><span>Markets &amp; social outcomes</span></li>
+          </ol>
+          <p>A rule creates categories, eligibility, and priority. It does not implement itself. Someone has to build and finance the systems that make recognition usable, participants adapt to the rule or game it, and the market that results can select very different actors than the rule-makers intended. My earlier work followed this in health care, where competition pushed transplant centers to misreport a measured allocation criterion, and where nonprofit, for-profit, and public hospitals each bent the same rule toward the people their form exists to serve.</p>
+          <p class="now"><span class="label">Now working on</span>Environmental certification and transition finance: who ends up inside rules written on verifiable attributes like forest cover and water quality, and who builds, finances, and governs the verification. Settings include aquaculture certification in the Mekong Delta, commodity certification in Southeast Asia, and coastal quality programs in Europe, all measured from public satellite and administrative data.</p>
+        </article>
+
+        <article class="program">
+          <span class="label">Inside the firm</span>
+          <h3>From Knowledge to Action</h3>
+          <p class="q">How do organizations turn representations, records, culture, and shared knowledge into coordinated capability?</p>
+          <ol class="path" aria-label="Program pathway">
+            <li>Knowledge structures</li>
+            <li><span>Judgment &amp; coordination</span></li>
+            <li><span>Capability &amp; performance</span></li>
+          </ol>
+          <p>Organizations decide what people pay attention to, how performance gets recorded, what knowledge is shared, and what becomes common enough to act on together. Those choices drive judgment, coordination, and learning. They also decide how much value a firm gets from artificial intelligence, because a shared AI tool changes not only how much people know but how alike they think.</p>
+          <p class="now"><span class="label">Now working on</span>Culture as a coordination device: why a cultural faux pas costs so much (it marks someone who will misread the next game), and how organizations design what is known about people, by members, and in common.</p>
+        </article>
+      </div>
+
+      <div class="lens">
+        <h3>The lens across both</h3>
+        <p>Uncertainty is shaped, not just faced. Rules decide what can be measured and rewarded. Representations decide which possibilities make it into a decision. Competitive position changes what variance is worth. Organizations decide which uncertainty gets reduced, shared, preserved, or exploited.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Selected papers</span>
+        <h2>What to read first</h2>
+      </div>
+      <ul class="papers">
+        <li class="paper">
+          <div class="meta pub"><b>Organization Science</b>2020 · with Felipe A. Csaszar</div>
+          <div><h3>A Contingency Theory of Representational Complexity in Organizations</h3>
+            <p>When should a decision-maker use a simple model of the world rather than a complex one? It depends less on how complex the environment is than on how much the decision-maker already knows.</p></div>
+          <div class="go"><a href="https://doi.org/10.1287/orsc.2019.1346">DOI ↗</a></div>
+        </li>
+        <li class="paper">
+          <div class="meta pub"><b>Strategic Management Journal</b>2025</div>
+          <div><h3>The Competitive Dynamics of Strategic Risk-Taking, Unethical Behavior, and Entry</h3>
+            <p>Risky and unethical conduct that an incumbent would never touch can be a rational route in for an entrant, and entrants who succeed this way change how the whole industry behaves.</p></div>
+          <div class="go"><a href="https://doi.org/10.1002/smj.3650">DOI ↗</a></div>
+        </li>
+        <li class="paper">
+          <div class="meta pub"><b>Org. Behavior &amp; Human Decision Processes</b>2021 · with Vanessa C. Burbano</div>
+          <div><h3>Differences in Consumer-Benefiting Misconduct by Nonprofit, For-Profit, and Public Organizations</h3>
+            <p>All three organizational forms break rules to help someone. Which form you are decides whether you do it and whom you do it for. Best ethics paper, Midwest Strategy Conference.</p></div>
+          <div class="go"><a href="https://doi.org/10.1016/j.obhdp.2020.02.002">DOI ↗</a></div>
+        </li>
+        <li class="paper">
+          <div class="meta wp"><b>Working paper</b>Solo-authored</div>
+          <div><h3>The Firm as Shared Cognition</h3>
+            <p>A shared AI tool has two properties: how smart it is and how common it makes thinking across the firm. Commonness helps teams coordinate but makes the firm fragile when the shared tool is wrong, and it changes whether employees will teach the tool what they know.</p></div>
+          <div class="go"></div>
+        </li>
+        <li class="paper">
+          <div class="meta wp"><b>Working paper</b>with Nile W. Hatch</div>
+          <div><h3>Competing Representations</h3>
+            <p>A firm's way of seeing the market is only as good as the rival it faces. Performance depends on what you attend to and also on what your competitor sees and misses.</p></div>
+          <div class="go"></div>
+        </li>
+        <li class="paper" id="p-sftf">
+          <div class="meta wp"><b>In revision</b>Formal theory</div>
+          <div><h3>Swinging for the Fences: Strategic Risk-Taking in Entrepreneurship</h3>
+            <p>Entrepreneurs need not be risk lovers to choose high-variance strategies. When competition rewards only a few winners, a weaker position makes variance the rational route to entry. Figure 1 above is the core idea.</p></div>
+          <div class="go"><span class="pending">Manuscript on request</span></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="teaching" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Teaching</span>
+        <h2>Students make real calls, then learn from how they turned out</h2>
+      </div>
+
+      <div class="platforms">
+        <article class="platform">
+          <span class="label">Platform one</span>
+          <h3>Strategy, Competition, and Investment Judgment</h3>
+          <p>Figure out what game you are in, where advantage and cash flow come from, and how to make a defensible call under uncertainty. Then point the same tools at an investment decision.</p>
+          <ul class="courses">
+            <li><span class="c">Investing: What and Why</span><span class="w live">Fall 2026</span><span class="d">BUS 170, undergraduate. Markets for first-years: mental models, a live portfolio, the 5-vs-10 Portfolio Challenge, and AI Socratic labs. Co-taught as BI232 at Taejae University, spring 2026.</span></li>
+            <li><span class="c">Student Investment Fund</span><span class="w live">Launching</span><span class="d">Undergraduates manage real money under a written governing document: quality, an independent view, expectations, then valuation discipline.</span></li>
+            <li><span class="c">Economics of Strategy</span><span class="w">Wharton 211 / 711</span><span class="d">Industry structure, game theory, real options, and cognition, taught through about twenty hands-on skill builders, with Tesla as the semester-long case.</span></li>
+            <li><span class="c">Willamette Angel Fund</span><span class="w">2023–24</span><span class="d">MBA practicum in early-stage investing with real capital on the line.</span></li>
+          </ul>
+        </article>
+
+        <article class="platform">
+          <span class="label">Platform two</span>
+          <h3>Institutions, Policy, and Cross-Sector Change</h3>
+          <p>How rules and organizational form shape markets and social outcomes, why bad equilibria persist, and how to design a fix that survives implementation. Business, government, and nonprofits, side by side.</p>
+          <ul class="courses">
+            <li><span class="c">PACE: Organizations and Management in Society</span><span class="w live">Fall 2026</span><span class="d">MBA core. Business disciplines, then public management (King County), nonprofit management (Habitat for Humanity), and private-sector solutions for new equilibria.</span></li>
+            <li><span class="c">Strategy &amp; Public Policy, with the LEAP capstone</span><span class="w live">2026–27</span><span class="d">GSM 6121, year-long. Fall: how the rules of the game are made. Winter: how the rules change the game, ending in a public legislative appraisal showcase.</span></li>
+            <li><span class="c">Global Problem Lab</span><span class="w live">New</span><span class="d">Social entrepreneurship as moving a system from a stuck equilibrium to a better one, worked on a live case with a partner organization. Year one: palm oil.</span></li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="cycle">
+        <span class="label">How every course runs</span>
+        <ol>
+          <li>Concept<span>A short, clear idea</span></li>
+          <li>Guided analysis<span>See one, do one</span></li>
+          <li>Decide under uncertainty<span>Commit before the outcome</span></li>
+          <li>Act or recommend<span>To a real audience</span></li>
+          <li>Feedback<span>From results and people</span></li>
+          <li>Reflect and transfer<span>Teach one</span></li>
+        </ol>
+      </div>
+
+      <div class="book">
+        <span class="label">Book in development</span>
+        <div>
+          <h3>Strategy and valuation are two ends of the same stick</h3>
+          <p class="prose" style="margin-top:8px;color:var(--muted)">A do-the-analysis strategy book built from the skill-builder method: each chapter pairs one idea with a worked model you build yourself, and the closing part turns the same toolkit on investment decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">About &amp; CV</span>
+        <h2>Engineer, economist, strategist</h2>
+      </div>
+      <div class="about">
+        <div class="prose">
+          <p>Jim Ostler is Associate Dean of Graduate Programs and Associate Professor and JELD-WEN Chair of Free Enterprise at Willamette University's Atkinson School of Business. He builds simple formal models of strategy and organization and tests them where the data are unusually clean: allocation rules in health care, certification schemes visible from satellites, a decade of student stock picks.</p>
+          <p style="margin-top:16px">Before Willamette he taught at the Wharton School, Georgetown's McDonough School of Business, and the University of Michigan's Ross School of Business. He trained first as a chemical engineer, which may explain the fondness for models you can actually run.</p>
+          <div class="contact">
+            <span class="email" id="email">jostler@willamette.edu</span>
+            <button class="copy" id="copyBtn" type="button">Copy email</button>
+          </div>
+          <div class="links">
+            <span class="pending">CV (PDF) · Google Scholar · ORCID: links to add</span>
+          </div>
+        </div>
+        <div class="facts">
+          <dl>
+            <dt>Previously</dt>
+            <dd>Wharton School, University of Pennsylvania, 2019–21</dd>
+            <dd>McDonough School of Business, Georgetown, 2018–19</dd>
+            <dd>Ross School of Business, University of Michigan, 2013–18</dd>
+          </dl>
+          <dl>
+            <dt>Education</dt>
+            <dd>PhD, Management (Strategic Management and Decision-Making), UCLA</dd>
+            <dd>MA, Economics, UCLA</dd>
+            <dd>MBA and MS Engineering; BS Chemical Engineering, Brigham Young University</dd>
+          </dl>
+          <dl>
+            <dt>Service</dt>
+            <dd>Editorial Board, Strategic Management Journal, since 2016</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Jim Ostler · Atkinson School of Business, Willamette University · Salem, Oregon</span>
+    <span>Updated October 2026</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // normal CDF via erf approximation (Abramowitz–Stegun 7.1.26)
+  function erf(x){var s=x<0?-1:1;x=Math.abs(x);var t=1/(1+0.3275911*x);
+    var y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);return s*y;}
+  function Phi(z){return 0.5*(1+erf(z/Math.SQRT2));}
+  function pdf(x,m,s){return Math.exp(-0.5*Math.pow((x-m)/s,2))/(s*Math.sqrt(2*Math.PI));}
+
+  var INC={m:0.8,s:0.6}, ENT_M=0, Z=1.5, XMIN=-4, XMAX=5;
+  var canvas=document.getElementById('dist'), slider=document.getElementById('sigma');
+  var ctx=canvas.getContext('2d');
+
+  function tok(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+  function fmt(p){return (p*100<0.1?'<0.1':(p*100).toFixed(1))+'%';}
+
+  function draw(){
+    var sE=parseFloat(slider.value);
+    document.getElementById('sigmaVal').textContent=sE.toFixed(2);
+    var pI=1-Phi((Z-INC.m)/INC.s), pE=1-Phi((Z-ENT_M)/sE);
+    document.getElementById('pInc').textContent=fmt(pI);
+    document.getElementById('pEnt').textContent=fmt(pE);
+
+    var dpr=window.devicePixelRatio||1, w=canvas.clientWidth, h=canvas.clientHeight;
+    if(!w||!h) return;
+    canvas.width=Math.round(w*dpr); canvas.height=Math.round(h*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
+
+    var ink=tok('--ink'), muted=tok('--muted'), rule=tok('--rule'), acc=tok('--accent'), sig=tok('--signal');
+    var padB=26, padT=18, plotH=h-padB-padT;
+    var ymax=pdf(INC.m,INC.m,INC.s)*1.05;
+    function X(x){return (x-XMIN)/(XMAX-XMIN)*w;}
+    function Y(y){return padT+plotH-(Math.min(y,ymax)/ymax)*plotH;}
+
+    // baseline
+    ctx.strokeStyle=rule; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(0,Y(0)+.5); ctx.lineTo(w,Y(0)+.5); ctx.stroke();
+
+    function curve(m,s,color,fillAlpha){
+      // shaded tail beyond threshold
+      ctx.beginPath(); ctx.moveTo(X(Z),Y(0));
+      for(var x=Z;x<=XMAX;x+=0.02) ctx.lineTo(X(x),Y(pdf(x,m,s)));
+      ctx.lineTo(X(XMAX),Y(0)); ctx.closePath();
+      ctx.globalAlpha=fillAlpha; ctx.fillStyle=color; ctx.fill(); ctx.globalAlpha=1;
+      // line
+      ctx.beginPath();
+      for(var x2=XMIN;x2<=XMAX;x2+=0.02){var px=X(x2),py=Y(pdf(x2,m,s)); x2===XMIN?ctx.moveTo(px,py):ctx.lineTo(px,py);}
+      ctx.strokeStyle=color; ctx.lineWidth=2.25; ctx.stroke();
+    }
+    curve(INC.m,INC.s,acc,.28);
+    curve(ENT_M,sE,sig,.34);
+
+    // threshold
+    ctx.setLineDash([4,4]); ctx.strokeStyle=ink; ctx.lineWidth=1.25;
+    ctx.beginPath(); ctx.moveTo(X(Z)+.5,padT-6); ctx.lineTo(X(Z)+.5,Y(0)); ctx.stroke(); ctx.setLineDash([]);
+
+    ctx.font='11px "JetBrains Mono", ui-monospace, monospace'; ctx.textBaseline='top';
+    ctx.fillStyle=ink; ctx.textAlign='left';
+    var tx=X(Z)+6; if(tx>w-110){ctx.textAlign='right'; tx=X(Z)-6;}
+    ctx.fillText('survival threshold',tx,padT-8);
+    ctx.fillStyle=muted; ctx.textAlign='center';
+    ctx.fillText('relative performance →',w/2,Y(0)+8);
+    // series labels
+    ctx.textAlign='left'; ctx.fillStyle=acc;
+    ctx.fillText('incumbent',X(INC.m+INC.s*0.55)+4,Y(pdf(INC.m,INC.m,INC.s))+6);
+    ctx.fillStyle=sig;
+    var ex=ENT_M-sE*1.1; ctx.textAlign='right';
+    ctx.fillText('entrant',X(ex)-2,Math.max(padT,Y(pdf(ex,ENT_M,sE))-16));
+  }
+
+  slider.addEventListener('input',draw);
+  if(window.ResizeObserver){ new ResizeObserver(draw).observe(canvas); } else { window.addEventListener('resize',draw); }
+  try{ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw); }catch(e){}
+  new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(draw);}
+  draw();
+
+  var btn=document.getElementById('copyBtn');
+  btn.addEventListener('click',function(){
+    var t=document.getElementById('email').textContent;
+    function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById('email'));var s=window.getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected, press Ctrl+C';}
+    try{ navigator.clipboard.writeText(t).then(function(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy email';},1600);},sel); }catch(e){ sel(); }
+  });
+})();
+</script>
+</body>
+</html>
